@@ -4,3 +4,4 @@
 *.iml
 *.dex
 Cargo.lock
+.vscode

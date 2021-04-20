@@ -161,8 +161,15 @@ pub struct Code {
 // Docs: try_item
 #[derive(Debug, PartialEq)]
 pub struct TryItem {
+    /// No idea what this is:
     pub code_units: Vec<u16>,
-    pub handler: EncodedCatchHandler
+    pub handler: EncodedCatchHandler,
+    // From raw type:
+    /// start address of the block of code covered by this entry
+    /// a count of 16-bit code units to the start of the first covered instruction
+    pub start_addr: u32,
+    /// number of 16-bit code units covered by this entry
+    pub insn_count: u16,
 }
 
 // Docs: encoded_catch_handler

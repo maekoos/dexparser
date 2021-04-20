@@ -1,3 +1,6 @@
+## WARNING
+This repo contains a bodge trying to fix how tries are handled in the original dexparser crate. It is only in the bodge-state for now since I'm not sure how it's supposed to be implemented - and I need this functionality for the [aar](https://github.com/maekoos/aar) project.
+
 # Dexparser
 
 A Rust library for parsing Android's DEX file format with parser combinators.

@@ -302,8 +302,14 @@ fn transform_code_item<'a>(data: &'a[u8], data_off: usize, handler_off: usize, r
     if let Some(raw_tries) = raw.tries {
         for raw_try in raw_tries {
 
-            let code_units = parse_code_units(&data[raw_try.start_addr as usize ..],
-                                              raw_try.insn_count as usize, e)?.1;
+            let code_units = parse_code_units(&data[(raw_try.start_addr*4) as usize ..],
+                                              raw_try.insn_count as usize, e)?;
+            // let abc = raw_try.start_addr as usize;
+            // println!("[dexparser] Code units A: {:?} {} {}", abc, raw_try.insn_count, abc + raw_try.insn_count as usize);
+            // println!("[dexparser] Code units A: {:#0X?}", &data[abc*4..abc*4 +(raw_try.insn_count*4) as usize]);
+            // println!("[dexparser] Code units:   {:#0X?}", code_units.1);
+
+            let code_units = code_units.1;
 
             let handler = {
                 let rh = peek!(&data[handler_off + raw_try.handler_off as usize ..], parse_encoded_catch_handler)?.1;
@@ -312,7 +318,9 @@ fn transform_code_item<'a>(data: &'a[u8], data_off: usize, handler_off: usize, r
 
             tries.push(TryItem {
                 code_units,
-                handler
+                handler,
+                start_addr: raw_try.start_addr,
+                insn_count: raw_try.insn_count,
             });
         }
     }
